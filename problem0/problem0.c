@@ -62,7 +62,7 @@ int main (int agrc, char * argv[]) {
   		fprintf(stderr, "Error getting timeval\n");
     	return 1;
 	}
-	float computing_time = (tv1.tv_sec-tv0.tv_sec) + (float)(tv1.tv_usec-tv0.tv_usec)/1000000;
+	float computing_time = (float)(tv1.tv_sec-tv0.tv_sec) + (float)(tv1.tv_usec-tv0.tv_usec)/1000000;
   	printf("Elapsed time: %.6f s\n", computing_time);
   	return 0;
 }
