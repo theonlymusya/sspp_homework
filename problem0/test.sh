@@ -1,0 +1,16 @@
+./problem0 16 1
+./problem0 16 2
+./problem0 16 3
+./problem0 16 4
+./problem0 1000 1
+./problem0 1000 2
+./problem0 1000 3
+./problem0 1000 4
+./problem0 1000000 1
+./problem0 1000000 2
+./problem0 1000000 3
+./problem0 1000000 4
+./problem0 10000000 1
+./problem0 10000000 2
+./problem0 10000000 3
+./problem0 10000000 4
