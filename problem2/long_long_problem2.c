@@ -8,8 +8,8 @@
 #define EVENTS_NUM 4
 
 int handle_error(int code) {
-    printf ("Error: %d: %s\n", code, strerror(errno));
-    return 1;
+	printf ("Error: %d: %s\n", code, strerror(errno));
+	return 1;
 }
 
 long long** read_matrix_from_file(char * file, int * size) {
@@ -21,8 +21,8 @@ long long** read_matrix_from_file(char * file, int * size) {
 	fread(size, sizeof(int), 1, f);
 
 	matrix = (long long**)malloc(sizeof(long long*) * *size);
-    for (int i = 0; i < *size; i++)
-        matrix[i] = malloc(sizeof(long long) * *size);
+	for (int i = 0; i < *size; i++)
+		matrix[i] = malloc(sizeof(long long) * *size);
 
 	for (int i = 0; i < *size; i++)
 		for (int j = 0; j < *size; j++)
@@ -45,12 +45,12 @@ void write_matrix_in_file(char * file, int size, long long** C) {
 }
 
 long long** multiply(long long** A, long long** B, int size, char* mode) {
-        
-    long long** C = (long long**)malloc(sizeof(long long*) * size);
+	
+	long long** C = (long long**)malloc(sizeof(long long*) * size);
 	for (int i = 0; i < size; i++)
-        C[i] = malloc(sizeof(long long) * size);
+		C[i] = malloc(sizeof(long long) * size);
 
-    if (!strcmp(mode, "0")) { //ijk 
+	if (!strcmp(mode, "0")) { //ijk 
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
 				for (int k = 0; k < size; k++)
@@ -97,40 +97,40 @@ long long** multiply(long long** A, long long** B, int size, char* mode) {
 					C[i][j] += A[i][k] * B[k][j];
 		printf("multiply mode == kji\n");
 	}
-    return C;
+	return C;
 }
 
 int main(int argc, char **argv) { 
-    int			size;
-    long long     	**A, **B, **C;
-    int     	event_set = PAPI_NULL;
-    int   		event_codes[EVENTS_NUM] = {PAPI_L1_DCM, PAPI_L1_ICM, PAPI_L1_LDM, PAPI_L1_STM};
-    long long  	papi_values[EVENTS_NUM];
+	int			size;
+	long long     	**A, **B, **C;
+	int     	event_set = PAPI_NULL;
+	int   		event_codes[EVENTS_NUM] = {PAPI_L1_DCM, PAPI_L1_ICM, PAPI_L1_LDM, PAPI_L1_STM};
+	long long  	papi_values[EVENTS_NUM];
 
-    if (argc != 5) {
+	if (argc != 5) {
 		fprintf(stderr, "Less of arguments\n");
 		return 1;
 	}
 	A = read_matrix_from_file(argv[1], &size);
-    B = read_matrix_from_file(argv[2], &size);
+	B = read_matrix_from_file(argv[2], &size);
 	printf("\ntype of elements == long long\n");
-    if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT)
-        return handle_error(0);
-    if (PAPI_create_eventset(&event_set) != PAPI_OK)
-        return handle_error(1);
-    if (PAPI_add_events(event_set, event_codes, EVENTS_NUM) != PAPI_OK)
-        return handle_error(2);
-    if (PAPI_start(event_set) != PAPI_OK )
-        return handle_error(3);
-    C = multiply(A, B, size, argv[4]);
+	if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT)
+		return handle_error(0);
+	if (PAPI_create_eventset(&event_set) != PAPI_OK)
+		return handle_error(1);
+	if (PAPI_add_events(event_set, event_codes, EVENTS_NUM) != PAPI_OK)
+		return handle_error(2);
+	if (PAPI_start(event_set) != PAPI_OK )
+		return handle_error(3);
+	C = multiply(A, B, size, argv[4]);
 	if (PAPI_stop(event_set, papi_values) != PAPI_OK)
-        return handle_error(4);
-    if (PAPI_remove_events(event_set, event_codes, EVENTS_NUM) != PAPI_OK)
-        return handle_error(5);
-    if (PAPI_destroy_eventset(&event_set) != PAPI_OK)
-        return handle_error(6);
-    PAPI_shutdown();
-    printf("L1 data + instructions misses == %lld\n", papi_values[0] + papi_values[1]);
+		return handle_error(4);
+	if (PAPI_remove_events(event_set, event_codes, EVENTS_NUM) != PAPI_OK)
+		return handle_error(5);
+	if (PAPI_destroy_eventset(&event_set) != PAPI_OK)
+		return handle_error(6);
+	PAPI_shutdown();
+	printf("L1 data + instructions misses == %lld\n", papi_values[0] + papi_values[1]);
 	printf("L1 load misses == %lld\n", papi_values[2]);
 	printf("L1 store misses == %lld\n", papi_values[3]);
 	for (int i = 0; i < size; i++)
@@ -142,5 +142,5 @@ int main(int argc, char **argv) {
 	for (int i = 0; i < size; i++)
 		free(C[i]);
 	free(C);
-    return 0;
+	return 0;
 }
