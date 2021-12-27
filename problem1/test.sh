@@ -1,0 +1,12 @@
+./problem1 int_A int_B int_C 0
+./problem1 int_A int_B int_C 1
+./problem1 int_A int_B int_C 2
+./problem1 int_A int_B int_C 3
+./problem1 int_A int_B int_C 4
+./problem1 int_A int_B int_C 5
+./problem1 long_long_A long_long_B long_long_C 0
+./problem1 long_long_A long_long_B long_long_C 1
+./problem1 long_long_A long_long_B long_long_C 2
+./problem1 long_long_A long_long_B long_long_C 3
+./problem1 long_long_A long_long_B long_long_C 4
+./problem1 long_long_A long_long_B long_long_C 5
